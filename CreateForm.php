@@ -144,7 +144,26 @@ if ($showForm) {
     echo "<p>We'll get back to you at " . htmlspecialchars($email) . ".</p>";
     echo "</div>";
 }
-
+/*
+ASSIGNMENT COMMENTS - REFLECTIONS
+1. OUTPUT PREDICTIONS:
+- Before submission: The page will render an empty HTML form with fields for Name, Email, Topic, and Message.
+- Upon invalid submission (e.g., missing data or < 50 words): The code will stay on the same page, display specific red error messages, and keep the user's previously typed data inside the fields.
+- Upon successful submission: The form will disappear completely. It will display a structured "Thank you" success message mapping the exact values entered. If malicious code (like <script>alert('XSS')</script>) is submitted, it will safely print out as plain text on the page instead of executing, because of htmlspecialchars().
+2. EXPECTED $_POST STRUCTURE:
+When the form is submitted via the POST method, the $_POST superglobal array will contain:
+$_POST = [
+    'Submit'  => 'Send Message',
+    'FullName'=> 'User's input string',
+    'Email'   => 'User's input string',
+    'Topic'   => 'User's input string',
+    'Message' => 'User's input string (long paragraph)'
+];
+3. POST-TEST REFLECTIONS (Surprises, Fixes, insughts):
+- Insights: Separating data validation from output sanitization is critical. Sanitizing too early (like modifying raw variables during step 1) can break length validation counts or alter stored formats. Keeping raw variables intact for backend math and only using htmlspecialchars() at the exact moment of echo/display guarantees data integrity and security.
+- Fixes: Standard string counting with strlen() counts characters, not words. To properly enforce the 50–150 word rule, using str_word_count() is necessary to isolate individual strings separated by spaces.
+- Surprise: It is clean and secure to let a form self-process by keeping the action attribute empty ("") or pointing to the same filename, allowing PHP to seamlessly handle state logic.
+*/
 ?>
 
 </body>
