@@ -1,4 +1,5 @@
-<!--Behzad Ghabaei
+<!--
+Behzad Ghabaei
 CS 85 PHP
 Module 3B - Secure Product Contact Form
 -->
@@ -55,13 +56,13 @@ $errors = [];
 $showForm = true;
 
 // Detect form submission using POST method
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['Submit'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
     
     // 1. Extract and clean basic whitespace trailing layout
-    $fullName = isset($_GET['FullName']) ? trim($_GET['FullName']) : "";
-    $email = isset($_GET['Email']) ? trim($_GET['Email']) : "";
-    $topic = isset($_GET['Topic']) ? trim($_GET['Topic']) : "";
-    $message = isset($_GET['Message']) ? trim($_GET['Message']) : "";
+    $fullName = isset($_POST['FullName']) ? trim($_POST['FullName']) : "";
+    $email = isset($_POST['Email']) ? trim($_POST['Email']) : "";
+    $topic = isset($_POST['Topic']) ? trim($_POST['Topic']) : "";
+    $message = isset($_POST['Message']) ? trim($_POST['Message']) : "";
 
     // 2. Validate Full Name
     if (empty($fullName)) {
@@ -110,7 +111,7 @@ if ($showForm) {
     ?>
     <h2>Contact Me</h2>
     <!-- Self-processing form utilizing POST -->
-    <form action="" method="GET">
+    <form action="" method="POST">
         <div class="form-group">
             <label for="FullName">Full Name:</label>
             <input type="text" id="FullName" name="FullName" value="<?php echo htmlspecialchars($fullName); ?>" required>
@@ -127,7 +128,7 @@ if ($showForm) {
         </div>
 
         <div class="form-group">
-            <label for="Message">Message (50–150 words required):</label>
+            <label for="Message">Message (50 to 150 words required):</label>
             <textarea id="Message" name="Message" required><?php echo htmlspecialchars($message); ?></textarea>
         </div>
 
@@ -147,8 +148,11 @@ if ($showForm) {
 /*
 ASSIGNMENT COMMENTS - REFLECTIONS
 1. OUTPUT PREDICTIONS:
+- The GET method proves that the application is fully functioning. It ran successfully.
+- Later using the POST method shows body is correctly displaying information.
+- Typing 50 words in message box was too long. Changed to 1-150.
 - Before submission: The page will render an empty HTML form with fields for Name, Email, Topic, and Message.
-- Upon invalid submission (e.g., missing data or < 50 words): The code will stay on the same page, display specific red error messages, and keep the user's previously typed data inside the fields.
+- Upon invalid submission (i.e.., missing data or < 50 words): The code will stay on the same page, display specific red error messages, and keep the user's previously typed data inside the fields.
 - Upon successful submission: The form will disappear completely. It will display a structured "Thank you" success message mapping the exact values entered. If malicious code (like <script>alert('XSS')</script>) is submitted, it will safely print out as plain text on the page instead of executing, because of htmlspecialchars().
 2. EXPECTED $_POST STRUCTURE:
 When the form is submitted via the POST method, the $_POST superglobal array will contain:
