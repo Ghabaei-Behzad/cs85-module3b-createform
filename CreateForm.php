@@ -163,7 +163,7 @@ $_POST = [
     'Topic'   => 'User's input string',
     'Message' => 'User's input string (long paragraph)'
 ];
-3. POST-TEST REFLECTIONS (Surprises, Fixes, insughts):
+3. POST-TEST REFLECTIONS (Surprises, Fixes, Insights):
 - Insights: Separating data validation from output sanitization is critical. Sanitizing too early (like modifying raw variables during step 1) can break length validation counts or alter stored formats. Keeping raw variables intact for backend math and only using htmlspecialchars() at the exact moment of echo/display guarantees data integrity and security.
 - Fixes: Standard string counting with strlen() counts characters, not words. To properly enforce the 50–150 word rule, using str_word_count() is necessary to isolate individual strings separated by spaces.
 - Surprise: It is clean and secure to let a form self-process by keeping the action attribute empty ("") or pointing to the same filename, allowing PHP to seamlessly handle state logic.
